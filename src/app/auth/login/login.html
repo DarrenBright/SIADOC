@@ -1,0 +1,68 @@
+<div class="login-page">
+  <div class="login-card">
+    
+    <div class="login-header">
+      <h1>SIAD</h1>
+      <p>Système d’Information des Dossiers Administratifs</p>
+    </div>
+
+    <form (ngSubmit)="onLogin()">
+        <div class="form-group">
+            <label>Identifiant</label>
+            <input
+            type="text"
+            [(ngModel)]="username"
+            name="username"
+            placeholder="Entrez votre identifiant"
+            required
+            />
+        </div>
+
+        <div class="form-group">
+            <label>Mot de passe</label>
+            <input
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Entrez votre mot de passe"
+            required
+            />
+        </div>
+
+        <!-- RÔLE -->
+        <div class="form-group">
+            <label>Rôle</label>
+            <select [(ngModel)]="role" name="role" required>
+            <option value="" disabled selected>— Sélectionnez votre rôle —</option>
+            <option *ngFor="let r of roles" [value]="r.value">
+                {{ r.label }}
+            </option>
+            </select>
+        </div>
+
+        <!-- SECTEUR MILITAIRE (UNIQUEMENT COMPAGNIE) -->
+        <div class="form-group" *ngIf="role === 'COMPAGNIE'">
+            <label>Secteur militaire</label>
+            <select [(ngModel)]="secteurMilitaire" name="secteurMilitaire">
+            <option value="" disabled selected>— Sélectionnez le secteur —</option>
+            <option *ngFor="let s of secteursMilitaires" [value]="s">
+                {{ s }}
+            </option>
+            </select>
+        </div>
+
+        <!-- MESSAGE D'ERREUR -->
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+
+        <button type="submit">Connexion</button>
+        </form>
+
+
+    <div class="login-footer">
+      <span>Accès sécurisé – Usage interne</span>
+    </div>
+
+  </div>
+</div>

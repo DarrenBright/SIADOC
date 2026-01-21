@@ -1,0 +1,60 @@
+<div class="page-container">
+  <div class="card">
+
+    <h2>Liste des fiches de renseignement</h2>
+
+    <div class="liste-header">
+      <input
+        type="text"
+        placeholder="🔍 Rechercher par nom ou prénom"
+      />
+
+      <button class="btn ajouter"
+        routerLink="/dashboard/fiche-renseignement">
+        ➕ Nouvelle fiche
+      </button>
+    </div>
+
+
+    <table class="table-fiches">
+      <thead>
+        <tr>
+          <th>N° Fiche</th>
+          <th>Nom</th>
+          <th>Prénoms</th>
+          <th>Date de contrôle</th>
+          <th>Agent contrôleur</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- Données fictives pour l’instant -->
+        <tr>
+          <td>001</td>
+          <td>KOUASSI</td>
+          <td>Jean Paul</td>
+          <td>12/01/2026</td>
+          <td>Adjudant Traoré</td>
+          <td>
+            <button class="btn voir" routerLink="/dashboard/fiche-renseignement">Voir</button>
+            <button class="btn-action">Imprimer</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td>002</td>
+          <td>YAO</td>
+          <td>Marie Claire</td>
+          <td>13/01/2026</td>
+          <td>Sergent Koffi</td>
+          <td>
+            <button class="btn-action">Voir</button>
+            <button class="btn-action">Imprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
