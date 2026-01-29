@@ -6,7 +6,7 @@
       <p>Système d’Information des Dossiers Administratifs</p>
     </div>
 
-    <form (ngSubmit)="onLogin()">
+    <form (ngSubmit)="seConnecter()">
         <div class="form-group">
             <label>Identifiant</label>
             <input
@@ -41,22 +41,29 @@
         </div>
 
         <!-- SECTEUR MILITAIRE (UNIQUEMENT COMPAGNIE) -->
-        <div class="form-group" *ngIf="role === 'COMPAGNIE'">
+        <div *ngIf="role === 'COMMANDANT_UNITE' || role === 'COMPAGNIE'">
             <label>Secteur militaire</label>
-            <select [(ngModel)]="secteurMilitaire" name="secteurMilitaire">
-            <option value="" disabled selected>— Sélectionnez le secteur —</option>
-            <option *ngFor="let s of secteursMilitaires" [value]="s">
+            <select
+                [(ngModel)]="secteurMilitaire"
+                name="secteurMilitaire"
+                required
+            >
+                <option value="">-- Sélectionner un secteur militaire --</option>
+                <option *ngFor="let s of secteursMilitaires" [value]="s">
                 {{ s }}
-            </option>
+                </option>
             </select>
         </div>
+
+
+
 
         <!-- MESSAGE D'ERREUR -->
         <div *ngIf="errorMessage" class="error-message">
             {{ errorMessage }}
         </div>
 
-        <button type="submit">Connexion</button>
+        <button type="button" (click)="seConnecter()">Connexion</button>
         </form>
 
 

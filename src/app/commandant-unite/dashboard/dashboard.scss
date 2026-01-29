@@ -1,0 +1,169 @@
+/* ================================= */
+/* THEME CAMEROUN - INSTITUTIONNEL */
+/* ================================= */
+
+:root {
+  --green-cm: #007a3d;   /* Vert Cameroun */
+  --red-cm: #ce1126;     /* Rouge Cameroun */
+  --yellow-cm: #fcd116;  /* Jaune Cameroun */
+
+  --blue-dark: #2a4561;
+  --blue-dark-2: #3a5771;
+
+  --white: #c9cde4;
+  --text-dark: #1f2937;
+}
+
+/* ================================= */
+/* BACKGROUND GLOBAL */
+/* ================================= */
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  background-image: url("/assets/images/R.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 600px;
+  background-color: var(--blue-dark);
+  font-family: system-ui, sans-serif;
+}
+
+/* ================================= */
+/* LAYOUT PRINCIPAL */
+/* ================================= */
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: transparent;
+}
+
+/* ================================= */
+/* SIDEBAR */
+/* ================================= */
+
+.sidebar {
+  width: 280px;
+  background: linear-gradient(
+    180deg,
+    rgba(157, 134, 19, 0.96),
+    rgba(38, 78, 20, 0.96)
+  );
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+/* TOP */
+.logo {
+  font-size: 30px;
+  font-weight: bold;
+  color: var(--yellow-cm);
+  margin: 0;
+}
+
+.role {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* ================================= */
+/* MENU */
+/* ================================= */
+
+.menu {
+  flex: 1;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu-item {
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.25s ease;
+}
+
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.menu-item.active {
+  background: var(--green-cm);
+  box-shadow: inset 4px 0 0 var(--yellow-cm);
+}
+
+/* ================================= */
+/* SIDEBAR BOTTOM */
+/* ================================= */
+
+.sidebar-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  padding-top: 16px;
+}
+
+.logout {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid var(--red-cm);
+  color: var(--red-cm);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.logout:hover {
+  background: var(--red-cm);
+  color: var(--white);
+}
+
+/* ================================= */
+/* CONTENU */
+/* ================================= */
+
+.content {
+  flex: 1;
+  padding: 32px;
+  background: transparent;
+}
+
+/* ================================= */
+/* DASHBOARD MODULES */
+/* ================================= */
+
+.dashboard-layout {
+  display: flex;
+  gap: 24px;
+}
+
+/* Liste des modules */
+.modules-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* Cartes modules */
+.modules-list button {
+  background: rgba(151, 103, 103, 0.96);
+  border: none;
+  padding: 18px 20px;
+  border-radius: 14px;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.modules-list button:hover {
+  transform: translateY(-3px);
+  border-left: 6px solid var(--green-cm);
+}

@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FicheRenseignementService } from '../services/fiche-renseignement.service';
+
 
 @Component({
   selector: 'app-fiche-renseignement',
@@ -9,16 +11,38 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './fiche-renseignement.html',
   styleUrls: ['./fiche-renseignement.scss']
 })
-export class FicheRenseignement {
+export class FicheRenseignement implements OnInit {
 
+  // 🔹 Navigation / affichage
   activeSection: string = 'controle';
+  mode: 'edition' | 'consultation' = 'edition';
+  ficheId: number | null = null;
+
+  constructor(private ficheService: FicheRenseignementService) {
+    const navigation = history.state;
+
+    if (navigation?.mode === 'consultation') {
+      this.mode = 'consultation';
+      this.ficheId = navigation.ficheId;
+      this.activeSection = 'apercu';
+      this.chargerFiche();
+    }
+  }
+
+
+  ngOnInit(): void {
+    const data = localStorage.getItem('ficheRenseignement');
+    if (data) {
+      this.fiche = JSON.parse(data);
+    }
+  }
 
   setSection(section: string): void {
     this.activeSection = section;
   }
 
+  // 🔹 Données fiche
   fiche = {
-    // SECTION 1 — CONTRÔLE
     photo: null as File | null,
     numeroFiche: '',
     agentControle: '',
@@ -26,7 +50,6 @@ export class FicheRenseignement {
     uniteService: '',
     dateControle: '',
 
-    // SECTION 2 — IDENTITÉ DU CANDIDAT
     nom: '',
     prenoms: '',
     sexe: '',
@@ -37,7 +60,6 @@ export class FicheRenseignement {
     regionNaissance: '',
     nationalite: '',
 
-    // DESCRIPTION PHYSIQUE
     taille: '',
     poids: '',
     teint: '',
@@ -45,7 +67,6 @@ export class FicheRenseignement {
     couleurCheveux: '',
     signesParticuliers: '',
 
-    // SECTION 3 — FILIATION
     nomPere: '',
     professionPere: '',
     domicilePere: '',
@@ -54,7 +75,6 @@ export class FicheRenseignement {
     professionMere: '',
     domicileMere: '',
 
-    // SECTION 6 — PIÈCES D’IDENTITÉ
     numeroPiece: '',
     dateDelivrancePiece: '',
     dateExpirationPiece: '',
@@ -62,7 +82,6 @@ export class FicheRenseignement {
     typePieceIdentite: '',
     scanPieceIdentite: null as File | null,
 
-    // SECTION 7 — ADRESSE & CONTACTS
     adresseComplete: '',
     quartier: '',
     commune: '',
@@ -76,88 +95,72 @@ export class FicheRenseignement {
     personneContactUrgence: '',
     telephoneUrgence: '',
 
-    // SECTION — RENSEIGNEMENTS COMPLÉMENTAIRES
     specialiteRecrutement: '',
-
     diplomePresente: '',
     serieDiplomePresente: '',
     sessionDiplomePresente: '',
-
     niveauInstruction: '',
-
     diplomePlusEleve: '',
     serieDiplomePlusEleve: '',
     optionDiplomePlusEleve: '',
     dateDiplomePlusEleve: '',
-
     formationsComplementaires: '',
-
     lieuDeclaration: '',
     dateDeclaration: '',
     signatureCandidat: ''
   };
 
+  // 🔹 Actions
   enregistrerFiche() {
+    if (this.mode === 'consultation') {
+      return; // sécurité
+    }
+
     if (!this.validerFiche()) {
       return;
     }
 
-    console.log('Fiche validée et enregistrée', this.fiche);
-    alert('Fiche enregistrée avec succès ✅');
+    this.ficheService.enregistrerFiche(this.fiche).subscribe({
+      next: () => {
+        alert('Fiche enregistrée avec succès ✅');
+      },
+      error: () => {
+        alert('Erreur lors de l’enregistrement ❌');
+      }
+    });
   }
 
 
-  onPhotoSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-
-    if (input.files && input.files.length > 0) {
-      this.fiche.photo = input.files[0];
-    }
-  }
-
-  onPieceIdentiteSelected(event: Event) {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files.length > 0) {
-    this.fiche.scanPieceIdentite = input.files[0];
-  }
-}
 
 
   imprimerFiche(): void {
-
     window.print();
   }
 
-  ficheValide(): boolean {
-    return (
-      this.fiche.agentControle.trim() !== '' &&
-      this.fiche.dateControle.trim() !== '' &&
-
-      this.fiche.nom.trim() !== '' &&
-      this.fiche.prenoms.trim() !== '' &&
-      this.fiche.sexe.trim() !== '' &&
-      this.fiche.dateNaissance.trim() !== '' &&
-
-      this.fiche.numeroPiece.trim() !== ''
-    );
-  }
-
-  sauvegarderFiche() {
+  sauvegarderFiche(): void {
     localStorage.setItem('ficheRenseignement', JSON.stringify(this.fiche));
     alert('Fiche sauvegardée avec succès');
   }
 
-  ngOnInit() {
-    const data = localStorage.getItem('ficheRenseignement');
-    if (data) {
-      this.fiche = JSON.parse(data);
+  onPhotoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      this.fiche.photo = input.files[0];
     }
   }
 
+  onPieceIdentiteSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      this.fiche.scanPieceIdentite = input.files[0];
+    }
+  }
+
+  // 🔹 Validation
   validerFiche(): boolean {
-  // SECTION CONTRÔLE
+
     if (!this.fiche.agentControle) {
-      alert('Veuillez renseigner le nom de l’agent contrôleur');
+      alert('Veuillez renseigner l’agent contrôleur');
       this.activeSection = 'controle';
       return false;
     }
@@ -168,53 +171,29 @@ export class FicheRenseignement {
       return false;
     }
 
-    // SECTION IDENTITÉ
-    if (!this.fiche.nom) {
-      alert('Veuillez renseigner le nom du candidat');
+    if (!this.fiche.nom || !this.fiche.prenoms || !this.fiche.sexe || !this.fiche.dateNaissance) {
+      alert('Veuillez compléter l’identité du candidat');
       this.activeSection = 'identite';
       return false;
     }
 
-    if (!this.fiche.prenoms) {
-      alert('Veuillez renseigner les prénoms du candidat');
-      this.activeSection = 'identite';
-      return false;
-    }
-
-    if (!this.fiche.sexe) {
-      alert('Veuillez sélectionner le sexe');
-      this.activeSection = 'identite';
-      return false;
-    }
-
-    if (!this.fiche.dateNaissance) {
-      alert('Veuillez renseigner la date de naissance');
-      this.activeSection = 'identite';
-      return false;
-    }
-
-    // SECTION PIÈCE D’IDENTITÉ
-    if (!this.fiche.typePieceIdentite) {
-      alert('Veuillez sélectionner le type de pièce d’identité');
+    if (!this.fiche.typePieceIdentite || !this.fiche.numeroPiece) {
+      alert('Veuillez compléter la pièce d’identité');
       this.activeSection = 'identite-piece';
       return false;
     }
-
-    if (!this.fiche.numeroPiece) {
-      alert('Veuillez renseigner le numéro de la pièce d’identité');
-      this.activeSection = 'identite-piece';
-      return false;
-    }
-
-    if (!this.fiche.dateDelivrancePiece) {
-      alert('Veuillez renseigner la date de délivrance de la pièce');
-      this.activeSection = 'identite-piece';
-      return false;
-    }
-
 
     return true;
   }
 
+  chargerFiche() {
+    if (!this.ficheId) return;
+
+    this.ficheService.getFicheById(this.ficheId).subscribe({
+      next: (data: any) => {
+      this.fiche = data;
+    }
+    });
+  }
 
 }

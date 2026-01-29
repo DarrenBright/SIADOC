@@ -1,36 +1,27 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-dashboard-commandant-unite',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    RouterLink
-  ],
+  imports: [CommonModule],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss']
 })
-export class Dashboard {
+export class DashboardCommandantUnite {
 
-  role: string = 'RECRUTEMENT';
-  secteurMilitaire: string | null = null;
+  unite = '1er Bataillon';
+  compagnie = 'Compagnie Alpha';
+  secteur = 'Secteur Centre';
 
-  constructor(private router: Router) {
-    const navigation = history.state;
+  constructor(private router: Router) {}
 
-    this.role = navigation?.role ?? 'RECRUTEMENT';
-    this.secteurMilitaire = navigation?.secteurMilitaire ?? null;
+  allerListeDossiers() {
+    this.router.navigate(['/commandant-unite/dossiers']);
   }
 
-  logout() {
-    this.router.navigate(['/login']);
+  creerDossier() {
+    this.router.navigate(['/commandant-unite/creer-dossier']);
   }
-  isDashboardHome(): boolean {
-    return this.router.url === '/dashboard';
-  }
-
 }

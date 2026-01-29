@@ -9,10 +9,7 @@
         placeholder="🔍 Rechercher par nom ou prénom"
       />
 
-      <button class="btn ajouter"
-        routerLink="/dashboard/fiche-renseignement">
-        ➕ Nouvelle fiche
-      </button>
+      
     </div>
 
 
@@ -29,31 +26,20 @@
       </thead>
 
       <tbody>
-        <!-- Données fictives pour l’instant -->
-        <tr>
-          <td>001</td>
-          <td>KOUASSI</td>
-          <td>Jean Paul</td>
-          <td>12/01/2026</td>
-          <td>Adjudant Traoré</td>
-          <td>
-            <button class="btn voir" routerLink="/dashboard/fiche-renseignement">Voir</button>
-            <button class="btn-action">Imprimer</button>
-          </td>
-        </tr>
+      <tr *ngFor="let fiche of fiches">
+        <td>{{ fiche.id }}</td>
+        <td>{{ fiche.nom }}</td>
+        <td>{{ fiche.prenoms }}</td>
+        <td>{{ fiche.sexe }}</td>
+        <td>{{ fiche.dateNaissance }}</td>
+        <td>
+          <button (click)="voirFiche(fiche)">
+            Voir fiche
+          </button>
+        </td>
+      </tr>
+    </tbody>
 
-        <tr>
-          <td>002</td>
-          <td>YAO</td>
-          <td>Marie Claire</td>
-          <td>13/01/2026</td>
-          <td>Sergent Koffi</td>
-          <td>
-            <button class="btn-action">Voir</button>
-            <button class="btn-action">Imprimer</button>
-          </td>
-        </tr>
-      </tbody>
     </table>
 
   </div>

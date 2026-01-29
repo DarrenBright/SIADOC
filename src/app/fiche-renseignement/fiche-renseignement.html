@@ -479,7 +479,7 @@
 
     <!-- ================= BOUTON IMPRIMER ================= -->
     <div style="text-align:center; margin-top:30px;">
-      <button (click)="sauvegarderFiche()">
+      <button type="button" (click)="enregistrerFiche()">
         💾 Sauvegarder la fiche
       </button>
     </div>
@@ -488,7 +488,7 @@
       <button
         class="print-btn"
         (click)="imprimerFiche()"
-        [disabled]="!ficheValide()"
+        [disabled]="!validerFiche()"
       >
         🖨️ Imprimer la fiche
       </button>

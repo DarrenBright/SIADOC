@@ -1,0 +1,43 @@
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="sidebar-top">
+      <h1 class="logo">SIADOC</h1>
+      <p class="role">Commandant d’unité</p>
+    </div>
+
+    <nav class="menu">
+      <a a routerLink="dossier-administratif" class="menu-item active">
+        📁 Dossier administratif
+      </a>
+      <a class="menu-item">
+        📄 Pièces & documents
+      </a>
+      <a class="menu-item">
+        📊 Historique
+      </a>
+      <a class="menu-item">
+        👤 Profil militaire
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="secteur">
+        <span>Secteur militaire : </span>
+        <strong>{{ secteurMilitaire }}</strong>
+      </div>
+
+      <button class="logout">Déconnexion</button>
+    </div>
+
+  </aside>
+
+  <!-- CONTENU -->
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>
+ 

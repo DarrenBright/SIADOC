@@ -1,9 +1,8 @@
 import { Routes } from '@angular/router';
 import { Login } from './auth/login/login';
-import { Dashboard } from './dashboard/dashboard';
-import { FicheRenseignement } from './fiche-renseignement/fiche-renseignement';
-import { CreerDossier } from './dossier-administratif/creer-dossier/creer-dossier';
-import { ListeFiches } from './liste-fiches/liste-fiches';
+import { DashboardCommandantUnite } from './commandant-unite/dashboard/dashboard';
+import { Modules } from './commandant-unite/dossier-administratif/modules/modules';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -11,13 +10,31 @@ export const routes: Routes = [
   { path: 'login', component: Login },
 
   {
-    path: 'dashboard',
-    component: Dashboard,
+    path: 'commandant-unite/dashboard',
+    component: DashboardCommandantUnite
+  },
+  {
+    path: 'commandant-unite/dashboard',
+    component: DashboardCommandantUnite,
     children: [
-      { path: 'fiche-renseignement', component: FicheRenseignement },
-      { path: 'creer-dossier', component: CreerDossier },
-      { path: 'liste-fiches', component: ListeFiches },
-      { path: 'fiches/nouvelle', component: FicheRenseignement }
+      {
+        path: 'dossier-administratif',
+        component: Modules
+      }
+    ]
+  },
+
+  {
+    path: 'commandant-unite/dashboard',
+    component: DashboardCommandantUnite,
+    children: [
+      {
+        path: 'pieces-etat-civil',
+        loadComponent: () =>
+          import('./commandant-unite/dossier-administratif/pieces-etat-civil/pieces-etat-civil')
+            .then(m => m.PiecesEtatCivil)
+      }
     ]
   }
+
 ];

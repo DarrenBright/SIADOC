@@ -1,169 +1,48 @@
-/* ===================== */
-/* COULEURS GLOBALES */
-/* ===================== */
-body {
-  background-color: #F4F6F5;
-  color: #2E2E2E;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
+.dashboard-container {
+  padding: 24px;
 }
 
-/* ===================== */
-/* LAYOUT */
-/* ===================== */
-.layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-/* ===================== */
-/* SIDEBAR */
-/* ===================== */
-.sidebar {
-  width: 230px;
-   min-width: 230px;
-  background-color: #1F3D2B;
-  color: #FFFFFF;
-  padding: 24px 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-
-.sidebar h2 {
-  text-align: center;
+.header {
   margin-bottom: 30px;
-  color: #C9A227;
-  letter-spacing: 1px;
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  .infos {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    color: #555;
+  }
 }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  margin-bottom: 15px;
-}
-
-.sidebar a {
-  color: #FFFFFF;
-  text-decoration: none;
-  font-size: 15px;
-  display: block;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transition: background 0.2s;
-}
-
-.sidebar a:hover {
-  background-color: #2F4F3E;
-}
-
-/* ===================== */
-/* LOGOUT */
-/* ===================== */
-.logout-btn {
-  margin-top: auto;
-  width: 100%;
-  background-color: #C9A227;
-  border: none;
-  color: #1F3D2B;
-  padding: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.logout-btn:hover {
-  background-color: #b89a1f;
-}
-
-/* ===================== */
-/* CONTENU */
-/* ===================== */
-.content {
-  flex: 1;
-  padding: 32px;
-  background-color: #d9e3eb;
-}
-
-/* ===================== */
-/* TOP BAR */
-/* ===================== */
-.top-bar {
-  background-color: #2F4F3E;
-  color: #FFFFFF;
-  padding: 10px 15px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-}
-
-/* ===================== */
-/* TITRES */
-/* ===================== */
-h1, h2, h3 {
-  color: #1F3D2B;
-}
-
-/* ===================== */
-/* CARTES DASHBOARD */
-/* ===================== */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
-  margin-bottom: 20px;
 }
 
 .card {
-  background-color: #FFFFFF;
-  border-left: 5px solid #2F4F3E;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
   padding: 20px;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-.card h3 {
-  margin-top: 0;
-}
-
-.card button {
-  margin-top: 10px;
-  background-color: #2F4F3E;
-  color: #FFFFFF;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 4px;
   cursor: pointer;
+  transition: 0.2s ease;
+
+  h3 {
+    margin-bottom: 10px;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
 }
 
-.card button:hover {
-  background-color: #1F3D2B;
+.card.disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
-/* ===================== */
-/* BOUTONS GÉNÉRAUX */
-/* ===================== */
-button {
-  font-family: inherit;
-}
-
-/* ===================== */
-/* TABLES (plus tard) */
-/* ===================== */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #FFFFFF;
-}
-
-th {
-  background-color: #2F4F3E;
-  color: #FFFFFF;
-  padding: 10px;
-}
-
-td {
-  padding: 10px;
-  border-bottom: 1px solid #E0E0E0;
-}

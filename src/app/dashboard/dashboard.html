@@ -1,81 +1,33 @@
-<div class="layout">
+<div class="dashboard-container">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <h2>SIAD</h2>
-
-    <ul>
-      <li *ngIf="role === 'RECRUTEMENT'">
-        <a routerLink="/dashboard/fiche-renseignement"> 📝 Fiche de renseignement</a>
-      </li>
-      <li *ngIf="role === 'RECRUTEMENT'"> 🗂️ Créer dossier</li>
-      <li *ngIf="role === 'RECRUTEMENT'"> 🆔 Attribuer matricule</li>
-      <li *ngIf="role === 'RECRUTEMENT'">
-        <a routerLink="/dashboard/liste-fiches">
-          📄 Liste des fiches
-        </a>
-      </li>
-
-
-      <li *ngIf="role === 'COMPAGNIE'">Consulter dossier</li>
-      <li *ngIf="role === 'COMPAGNIE'">Vie administrative</li>
-
-      <li *ngIf="role === 'ARCHIVES'">Archives</li>
-
-      <li *ngIf="role === 'ETAT_MAJOR'">Consultation</li>
-    </ul>
-
-    <button class="logout-btn" (click)="logout()">Déconnexion</button>
-  </aside>
-
-  <!-- CONTENU PRINCIPAL -->
-  <main class="content">
-
-    <!-- BARRE HAUTE -->
-    <div class="top-bar">
-      <div>
-        <strong>Rôle :</strong> {{ role }}
-        <span *ngIf="secteurMilitaire">
-          | <strong>Secteur :</strong> {{ secteurMilitaire }}
-        </span>
-      </div>
+  <!-- En-tête -->
+  <div class="header">
+    <h1>Tableau de bord</h1>
+    <div class="infos">
+      <span><strong>Unité :</strong> {{ unite }}</span>
+      <span><strong>Compagnie :</strong> {{ compagnie }}</span>
+      <span><strong>Secteur :</strong> {{ secteur }}</span>
     </div>
-    <div *ngIf="isDashboardHome()">
-      <h1>Tableau de bord</h1>
+  </div>
 
-      <!-- CARTES -->
-      <div class="cards">
+  <!-- Cartes -->
+  <div class="cards">
 
-        <div class="card" *ngIf="role === 'RECRUTEMENT'">
-          <h3>Créer un dossier</h3>
-          <p>Créer un dossier administratif pour un militaire.</p>
-          <button>Créer</button>
-        </div>
-
-        <div class="card" *ngIf="role === 'COMPAGNIE'">
-          <h3>Gestion administrative</h3>
-          <p>Mutations, notations, punitions, récompenses.</p>
-          <button>Gérer</button>
-        </div>
-
-        <div class="card" *ngIf="role === 'ARCHIVES'">
-          <h3>Archivage</h3>
-          <p>Archiver et consulter les dossiers.</p>
-          <button>Accéder</button>
-        </div>
-
-        <div class="card" *ngIf="role === 'ETAT_MAJOR'">
-          <h3>Consultation</h3>
-          <p>Accès en lecture seule aux dossiers.</p>
-          <button>Consulter</button>
-        </div>
-      </div>
-
+    <div class="card" (click)="creerDossier()">
+      <h3>➕ Créer un dossier</h3>
+      <p>Ouvrir un dossier administratif pour un militaire existant.</p>
     </div>
 
-    <!-- 🔴 ZONE D’AFFICHAGE DES ÉCRANS ENFANTS -->
-    <router-outlet></router-outlet>
+    <div class="card" (click)="allerListeDossiers()">
+      <h3>📂 Liste des dossiers</h3>
+      <p>Consulter et compléter les dossiers administratifs.</p>
+    </div>
 
-  </main>
+    <div class="card disabled">
+      <h3>📊 Statistiques</h3>
+      <p>Vue globale des dossiers (à venir).</p>
+    </div>
+
+  </div>
 
 </div>

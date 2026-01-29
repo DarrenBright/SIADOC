@@ -20,11 +20,13 @@ export class Login {
   errorMessage: string = '';
 
   roles = [
-    { value: 'RECRUTEMENT', label: 'Bureau Recrutement' },
-    { value: 'COMPAGNIE', label: 'Compagnie / Unité administrative' },
-    { value: 'ARCHIVES', label: 'Bureau Fichier / Archives' },
-    { value: 'ETAT_MAJOR', label: 'État-major (consultation)' }
-  ];
+  { value: 'COMMANDANT_UNITE', label: 'Commandant d’unité' },
+  { value: 'COMPAGNIE', label: 'Commandant de compagnie' },
+  { value: 'ARCHIVES', label: 'Bureau Fichier / Archives' },
+  { value: 'ETAT_MAJOR', label: 'État-major (consultation)' }
+];
+
+
 
   secteursMilitaires = [
     '1er Secteur militaire',
@@ -41,28 +43,44 @@ export class Login {
 
   constructor(private router: Router) {}
 
-  onLogin() {
-    // Validation de base
-    if (!this.username || !this.password || !this.role) {
-      this.errorMessage = 'Veuillez renseigner tous les champs obligatoires.';
+  
+  seConnecter() {
+
+    if (!this.role) {
+      alert('Veuillez choisir un rôle');
       return;
     }
 
-    // Validation spécifique COMPAGNIE
-    if (this.role === 'COMPAGNIE' && !this.secteurMilitaire) {
-      this.errorMessage = 'Veuillez sélectionner le secteur militaire.';
+    if (
+      (this.role === 'COMMANDANT_UNITE' || this.role === 'COMPAGNIE')
+      && !this.secteurMilitaire
+    ) {
+      alert('Veuillez choisir un secteur militaire');
       return;
     }
 
-    // Connexion simulée réussie
-    this.errorMessage = '';
+    if (this.role === 'COMMANDANT_UNITE') {
+      this.router.navigate(
+        ['/commandant-unite/dashboard'],
+        { state: { role: this.role, secteurMilitaire: this.secteurMilitaire } }
+      );
+    }
 
-    // Redirection vers Dashboard avec contexte
-    this.router.navigate(['/dashboard'], {
-      state: {
-        role: this.role,
-        secteurMilitaire: this.secteurMilitaire
-      }
-    });
+    else if (this.role === 'COMPAGNIE') {
+      this.router.navigate(
+        ['/commandant-compagnie/dashboard'],
+        { state: { role: this.role, secteurMilitaire: this.secteurMilitaire } }
+      );
+    }
+
+    else if (this.role === 'ETAT_MAJOR') {
+      this.router.navigate(
+        ['/etat-major/dashboard'],
+        { state: { role: this.role } }
+      );
+    }
+
   }
+
+  
 }
